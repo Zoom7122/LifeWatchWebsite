@@ -1,0 +1,84 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Рабочий Слайдер</title>
+    <style>
+        /* Стилизация для кнопок и контейнера */
+        .slider-container {
+            position: relative;
+        }
+
+        .slider {
+            display: none;
+            position: relative;
+            left: 20%;
+        }
+
+        .slide_button {
+            display: none;
+            color: red;
+            font-size: 30px;
+        }
+        .slide-wrapper {
+            display: flex; /* Располагает слайды горизонтально в ряд */
+            transition: transform 0.5s ease; /* Добавляет плавный переход при сдвиге */
+        }
+    </style>
+</head>
+<body>
+
+    <button id="btnSlideShow" onclick="ShowSlideButton()">Показать слайдер</button>
+
+    <p>===> Слайдер <===</p>
+
+    <div class="slider-container">
+        <button id="prevButton" class="slide_button" onclick="changeSlide(-1)">&#9664; Назад</button>
+        <button id="nextButton" class="slide_button" onclick="changeSlide(1)">Вперед &#9654;</button>
+
+        <div id="slidesWrapper">
+            <img class="slider" src="../../slider/london.jpg" alt="Слайд 1">
+            <img class="slider" src="../../slider/ny.jpg" alt="Слайд 2">
+            <img class="slider" src="../../slider/spb.jpg" alt="Слайд 3">
+        </div>
+    </div>
+
+    <script>
+        let currentSlideIndex = 0;
+        const slides = document.getElementsByClassName("slider");
+
+        function showSlide(index) {
+            for (let i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            if (slides[index]) {
+                slides[index].style.display = "block";
+                currentSlideIndex = index; 
+            }
+        }
+
+        function changeSlide(direction) {
+            let newIndex = currentSlideIndex + direction;
+
+            if (newIndex >= slides.length) {
+                newIndex = 0; 
+            } else if (newIndex < 0) {
+                newIndex = slides.length - 1; 
+            }
+
+            showSlide(newIndex);
+        }
+
+        function ShowSlideButton() {
+            let startButton = document.getElementById("btnSlideShow");
+            startButton.style.display = "none";
+
+            let buttonsForSlide = document.getElementsByClassName("slide_button");
+            for (const button of buttonsForSlide) {
+                button.style.display = 'inline-block';
+            }
+            showSlide(0);
+        }
+    </script>
+</body>
+</html>
